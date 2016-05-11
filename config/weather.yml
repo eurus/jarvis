@@ -1,0 +1,148 @@
+code:
+  0: 
+    text: tornado
+    icon: tornado
+  1: 
+    text: tropical storm
+    icon: tornado
+  2: 
+    text: hurricane
+    icon: hurricane
+  3: 
+    text:  thunderstorms
+    icon: thunderstorm
+  4: 
+    text: thunderstorms
+    icon: thunderstorm
+  5: 
+    text: mixed rain and snow
+    icon: sleet
+  6: 
+    text: mixed rain and sleet
+    icon: sleet
+  7: 
+    text: mixed snow and sleet
+    icon: sleet
+  8: 
+    text: freezing drizzle
+    icon: sleet
+  9: 
+    text: drizzle
+    icon: sleet
+  10:  
+    text: freezing rain
+    icon: sleet
+  11:  
+    text: showers
+    icon: showers
+  12:  
+    text: showers
+    icon: showers
+  13:  
+    text: snow flurries
+    icon: snow-wind
+  14:  
+    text: light snow showers
+    icon: snow-wind
+  15:  
+    text: blowing snow
+    icon: snow-wind
+  16:  
+    text: snow
+    icon: snow
+  17:  
+    text: hail
+    icon: hail
+  18:  
+    text: sleet
+    icon: sleet
+  19:  
+    text: dust
+    icon: dust
+  20:  
+    text: foggy
+    icon: fog
+  21:  
+    text: haze
+    icon: fog
+  22:  
+    text: smoky
+    icon: smog
+  23:  
+    text: blustery
+    icon: strong-windy
+  24:  
+    text: windy
+    icon: windy
+  25:  
+    text: cold
+    icon: snowflake-cold
+  26:  
+    text: cloudy
+    icon: cloudy
+  27:  
+    text: mostly cloudy (night)
+    icon: night-alt-cloudy
+  28:  
+    text: mostly cloudy (day)
+    icon: day-cloudy
+  29:  
+    text: partly cloudy (night)
+    icon: night-partly-cloudy
+  30:  
+    text: partly cloudy (day)
+    icon: day-cloudy
+  31:  
+    text: clear (night)
+    icon: night-clear
+  32:  
+    text: sunny
+    icon: day-sunny
+  33:  
+    text: fair (night)
+    icon: cloud
+  34:  
+    text: fair (day)
+    icon: cloud
+  35:  
+    text: mixed rain and hail
+    icon: hail
+  36:  
+    text: hot
+    icon: hot
+  37:  
+    text: isolated thunderstorms
+    icon: thunderstorm
+  38:  
+    text: scattered thunderstorms
+    icon: thunderstorm
+  39:  
+    text: scattered thunderstorms
+    icon: thunderstorm
+  40:  
+    text: scattered showers
+    icon: showers
+  41:  
+    text: heavy snow
+    icon: snow
+  42:  
+    text: scattered snow showers
+    icon: day-snow-thunderstorm
+  43:  
+    text: heavy snow
+    icon: snow
+  44:  
+    text: partly cloudy
+    icon: cloudy
+  45:  
+    text: thundershowers
+    icon: thunderstorm
+  46:  
+    text: snow showers
+    icon: snow
+  47:  
+    text: isolated thundershowers
+    icon: thunderstorm
+  3200:  
+    text: not available
+    icon: alien

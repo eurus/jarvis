@@ -1,0 +1,11 @@
+class CreateGroups < ActiveRecord::Migration
+  def change
+    create_table :groups do |t|
+      t.integer :leader
+      t.string :leader_role
+      t.string :name
+
+      t.timestamps null: false
+    end
+  end
+end

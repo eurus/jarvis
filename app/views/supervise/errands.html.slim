@@ -1,0 +1,39 @@
+.banner
+  .title 出差审批
+.p-20.pt-15
+  .panel
+    .panel-body
+      table.table.table-hover.datatable
+        thead
+          tr
+            th.desc 开始日期
+            th 结束日期
+            th 姓名
+            th 项目
+            th.sum_up.rmb 费用
+            th 状态
+            th 备注
+            th.no_sort
+            th.hidden
+        tbody
+          - @errands.each do |errand|
+            tr id="tr-errand-#{errand.id}"
+              td = errand.start_at
+              td = errand.end_at
+              td = errand.user.try :realname
+              td = errand.project.try :name
+              td = "￥ #{errand.fee}"
+              td id="tr-status-errand-#{errand.id}"  class="text-center #{issue_class errand.approve, errand.issue}"
+               = issue_status errand.approve, errand.issue
+              td id="tr-status-explain-#{errand.id}" = errand.status_explain
+              td.ops
+                -if can? :check, :all
+                  = link_to fa_icon("check"),checkrecord_path(id: errand.id, cut: 'errand'),  data: {:confirm => "确认收到 #{errand.user.try :realname} 的差旅报销单？", text:"#{errand.start_at}至#{errand.end_at}，#{errand.project.try :name}"}, id: "check-errand-#{errand.id}",remote: true unless errand.approve
+                -if can? :issue, :all
+                  = link_to fa_icon('usd'), issuerecord_path(id: errand.id, cut: 'errand'), data: {:confirm => "确认发放差旅费: #{errand.user.try :realname} ￥#{errand.fee}", text:"#{errand.start_at}至#{errand.end_at}，#{errand.project.try :name}"},id: "issue-errand-#{errand.id}",remote: true unless errand.issue
+              td = errand.user.try :username
+
+
+
+
+

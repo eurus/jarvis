@@ -1,0 +1,10 @@
+.banner
+  .title 八阿哥
+.p-20.pt-15
+  .panel
+    .panel-header.text-center
+      h3 = @bug.try :project_name
+      h4 = @bug.created_at.strftime("%Y-%m-%d")
+    .panel-body
+      pre = @bug.try :trace 
+      = link_to '返回',supervise_bughunter_path, class:"btn btn-primary"

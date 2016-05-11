@@ -1,0 +1,37 @@
+div
+  .col-md-3
+  .col-md-6
+    = simple_form_for(@project, url: supervise_projects_path,method: :post)  do |f|
+      -if @project.errors.any?
+        ul
+          - @project.errors.full_messages.each do |msg|
+            li = msg
+
+      .form-groups
+        = f.label "名称"
+        = f.text_field :name,class: "form-control"
+      .form-groups
+        = f.label "负责人"
+        = f.select :owner_id, @col.collect {|p| [ "#{p.fullname} <#{p.role_explain}>", p.id ]}, {}, {class:'form-control'}
+      .form-groups
+        = f.label "状态"
+        = f.select :status,  Project::STATUS_LIST, {}, {class:'form-control'}
+      .form-groups
+        label 成员
+        select#buddies name='buddies[]' multiple='multiple'
+          -@col.each do |u|
+            = content_tag(:option, "#{u.fullname}", value: u.id, selected:false)
+      .form-groups
+        = f.label "简介"
+        = f.text_area :content,class: "form-control", rows:'5'
+
+      .form-actions.mt-30
+        .row
+          .col-md-6
+            = link_to "返回", supervise_projects_path,class: "btn btn-default btn-block"
+          .col-md-6
+            = f.submit '保存',class:"btn btn-block btn-primary"
+
+coffee:
+  $ ->
+    $('#buddies').selectize()

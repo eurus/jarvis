@@ -1,0 +1,36 @@
+.banner
+  .title 周报
+  .breadcrumb-wrapper
+    label 您现在的位置:
+    ul.breadcrumb
+      li
+        a href='#' 周报
+      li.active  所有周报
+.p-20.pt-15
+  .masonry-container
+    - if @weeklies.length == 0
+      .panel.panel-default
+        .panel-body
+          div 不是不报，时候未到……
+    - @weeklies.each do |weekly|
+      .item.col-md-6
+        .item-heading
+          span.title= weekly.user.try :realname
+          span.subtitle = "[ #{weekly.created_at.beginning_of_week.strftime('%Y-%m-%d')} - #{weekly.created_at.end_of_week.strftime('%Y-%m-%d')} ]"
+          .actions.pull-right
+            /= link_to fa_icon('eye'), weekly
+            = link_to fa_icon('pencil-square-o'), edit_weekly_path(weekly) if weekly.user.try(:id) == current_user.id
+            = link_to fa_icon('times'), weekly, data: {:confirm => 'Are you sure?'}, :method => :delete if weekly.user.try(:id) == current_user.id
+        .item-body
+          b.pull-left 总结
+          p.pull-right ="书于 #{weekly.created_at.strftime('%Y-%m-%d')}"
+          .clearfix
+          = raw (weekly.try :sumary)
+          .clearfix.mb-20
+          b 期望
+          .clearfix.mb-10
+          = raw (weekly.try :hope)
+.row.text-center
+  = paginate @weeklies,theme: 'twitter-bootstrap-3'
+
+

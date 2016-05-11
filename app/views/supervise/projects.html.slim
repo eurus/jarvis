@@ -1,0 +1,40 @@
+
+.banner
+  .title 项目管理
+.p-20.pt-15
+  .panel
+    .panel-body
+      table.table.table-hover.datatable
+        thead
+          tr
+            th 项目
+            th 简介
+            th 负责人
+            th 成员
+            th.sum_up.rmb 累积差旅
+            th 状态
+            th.hidden.asc
+            th
+        tbody
+          - @projects.each do |project|
+            tr
+              td = link_to project.name, supervise_show_project_path(project)
+              td style='max-width:400px' = project.content
+              td = "#{project.owner.try(:realname)} #{project.owner.try(:nickname).capitalize}"
+              td
+                -if project.users.try(:count) > 0
+                  button.project-btn.btn.btn-default value="#{project.id}" data-toggle="modal" data-target="#projectM" = project.users.try :count
+                -else
+                  span
+              td = "￥ #{project.errand_total}"
+              td class=" text-center #{project.status_class}" = project.status_explain
+              td = project.status_no
+              td.ops
+                = link_to fa_icon('pencil-square-o'), supervise_edit_project_path(project)
+                = link_to fa_icon('check'), supervise_done_project_path(id:project.id),data: {:confirm => "确定完成#{project.try :name}"} unless project.status == "done"
+      - @projects.each do |project|
+        div.hidden id= "project#{project.id}"
+          - project.users.try :each do |x|
+            .col-sm-3.mt-10
+              div = image_tag(x.avatar_url(:thumb),class:"img-circle") if x.avatar?
+              div = x.fullname

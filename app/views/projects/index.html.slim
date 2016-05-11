@@ -1,0 +1,46 @@
+.banner
+  .title 项目
+  .breadcrumb-wrapper
+    label 您现在的位置:
+    ul.breadcrumb
+      li
+        a href='#' 项目
+      li.active  所有项目
+
+.p-20.pt-15
+  .panel
+    .panel-body
+      - if @projects.length == 0
+        div 什么？你居然还是没有项目，难道你真的想当扫地僧……
+      - else
+        table.table.table-hover.datatable
+          thead
+            tr
+              th 名称
+              th 简介
+              th 负责人
+              th 成员
+              th.sum_up.rmb 累积差旅
+              th 状态
+              th.hidden.asc
+          tbody
+            - @projects.each do |project|
+              tr
+                td= link_to project.name, project_path(project)
+                td style="max-width:400px" = project.content
+                td = project.owner.try :realname
+                td
+                  -if project.users.try(:count) > 0
+                    button.project-btn.btn.btn-default value="#{project.id}" data-toggle="modal" data-target="#projectM" = project.users.try :count
+                  -else
+                    span
+                td = "￥ #{project.errand_total}"
+                td class=" text-center #{project.status_class}" = project.status_explain
+                td = project.status_no
+        - @projects.each do |project|
+          div.hidden id= "project#{project.id}"
+            - project.users.try :each do |x|
+              .col-sm-3.mt-10
+                div = image_tag(x.avatar_url(:thumb),class:"img-circle") if x.avatar?
+                div = x.fullname
+

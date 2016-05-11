@@ -1,0 +1,24 @@
+html
+  head 
+    title Mailer
+    css:
+      body{
+        width: 90%;
+        padding: 50px;
+        background: #f5f5f5;
+      }
+      .text-center{
+        text-align: center;
+      }
+      .img-circle{
+        border-radius: 50px;
+        -webkit-border-radius: 50px;
+        -moz-border-radius: 50px;
+      }
+      .content{
+        text-align: left;
+      }
+  body
+    .container
+      .row
+        = yield

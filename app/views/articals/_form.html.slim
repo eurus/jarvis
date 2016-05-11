@@ -1,0 +1,25 @@
+.row
+  .banner
+    .title 文章
+.col-md-3
+.col-md-6
+  = simple_form_for(@artical) do |f|
+    -if @artical.errors.any?
+      ul
+        - @artical.errors.full_messages.each do |msg|
+          li = msg 
+
+    .form-groups
+      = f.label "标题"
+      = f.text_field :title,class: "form-control"
+    .form-groups
+      = f.label "来源"
+      = f.text_field :origin,class: "form-control"
+    .form-group
+      = f.label "内容"
+      = f.text_area :content,id: 'summernote',token: @uptoken, urlhead: 'http://7xl7it.com1.z0.glb.clouddn.com/',class:"form-control"
+
+    .form-actions
+      = f.submit '保存',class:"btn btn-block btn-primary"
+      = link_to "返回", articals_path,class: "btn btn-default btn-block"
+.col-md-3

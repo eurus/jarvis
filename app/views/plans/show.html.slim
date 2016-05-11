@@ -1,0 +1,19 @@
+div
+  .banner
+    .title 计划
+.row
+  .col-md-8.col-md-offset-2
+    .p-15.pt-20
+      .panel.panel-board
+        .panel-heading.text-center
+          .actions.pull-right
+            = link_to fa_icon('book'), plans_path
+            = link_to fa_icon('pencil-square-o'), edit_plan_path(@plan) if @plan.creator_id == current_user.id unless @plan.done
+          h3 = @plan.title
+          h4 = "#{@plan.start_at} ~ #{@plan.end_at}"
+          h5 = "作者：#{User.find(@plan.user_id).try :email}"
+          h5 = "计划类型：#{@plan.cut} 计划状态：#{@plan.status}"
+
+        .panel-body
+          article
+            = raw @plan.description

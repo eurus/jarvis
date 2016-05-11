@@ -1,0 +1,31 @@
+css:
+  .small{
+    font-size:12px !important;
+    color:#666 !important;
+  }
+  .content{
+  padding:20px;
+  }
+  .content h2{
+  margin-top:20px;
+  }
+  .footer{
+  margin-top:20px;
+  }
+
+.text-center
+  = image_tag "http://7rflo0.com1.z0.glb.clouddn.com/logo-dark.png", width: '50',height: '50'
+  h1="#{@report.user.try :realname} 周报"
+  div.small="[#{@start_date} - #{@end_date}]"
+
+.content
+  h2 本周总结
+  = raw @report.sumary
+  h2 下周期望
+  = raw @report.hope
+
+.footer
+  hr
+  div Excelsior! 精益求精
+  div Jarvis
+

@@ -1,0 +1,18 @@
+div
+  .banner
+    .title 文章
+.row
+  .col-md-8.col-md-offset-2
+    .p-15.pt-20
+      .panel.panel-board
+        .panel-heading.text-center
+          .actions.pull-right
+            = link_to fa_icon("book"), articals_path
+            = link_to fa_icon('pencil'), edit_artical_path(@artical)
+          h3 = @artical.title
+          h5= "编辑：#{User.find(@artical.user_id).try :nickname}"
+          h6
+            a href="#{@artical.origin}" 来源
+        .panel-body
+          article
+            = raw @artical.content

@@ -1,0 +1,32 @@
+.row
+  .banner
+    .title 计划
+.col-md-8.col-md-offset-2
+  = simple_form_for(@plan) do |f|
+    -if @plan.errors.any?
+        ul
+          - @plan.errors.full_messages.each do |msg|
+            li = msg
+
+    .form-groups.row
+      .col-md-6
+        = f.label "开始时间"
+        = f.text_field :start_at,{class: "form-control datepicker", value:"#{Date.today.beginning_of_week.strftime('%Y-%m-%d')}"}
+      .col-md-6
+        = f.label "结束时间"
+        = f.text_field :end_at,{class: "form-control datepicker", value: "#{(Date.today.end_of_week - 1.days).strftime('%Y-%m-%d')}"}
+    .form-groups.row
+      .col-md-6
+        =f.label "类型"
+        = f.select :cut, ["工作", "出差"] , {}, {class: 'form-control '}
+      - if pm? or ceo? or director?
+        .col-md-6
+          = f.label "执行者"
+          = f.select :user_id, @col.collect {|p| [ "#{p.fullname}", p.id ]}, {}, {autofocus:true, class:'form-control'}
+    .form-groups
+      = f.text_area :description,class:"form-control"
+    .form-actions.row.mt-30
+      .col-sm-6
+        = link_to "返回", plans_path ,class: "btn btn-default btn-block"
+      .col-sm-6
+        = f.submit '保存',class:"btn btn-block btn-primary"

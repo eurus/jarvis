@@ -1,0 +1,10 @@
+h2.text-center.sign-in-margin 忘记密码？
+.col-md-3
+.col-md-6
+  = simple_form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f|
+    = f.error_notification
+    .form-group
+      = f.input :email, required: true, autofocus: true,input_html:{ class: "form-control"},label: "邮箱"
+    .form-group
+      = f.button :submit, "重置密码",class:"btn btn-primary btn-block"
+  / = render "devise/shared/links"

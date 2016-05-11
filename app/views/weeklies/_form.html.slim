@@ -1,0 +1,18 @@
+.row
+  .banner
+    .title 周报
+.col-md-12.pt-20
+  = simple_form_for(@weekly) do |f|
+    -if @weekly.errors.any?
+        ul
+          - @weekly.errors.full_messages.each do |msg|
+            li = msg
+    .row
+      .form-groups.col-md-6
+        = f.label "总结"
+        = f.text_area :sumary,class:"form-control"
+        = link_to "返回", weeklies_path,class: "mt-15 btn btn-default btn-block"
+      .form-groups.col-md-6
+        = f.label "期望"
+        = f.text_area :hope,class:"form-control"
+        = f.submit '保存',class:"mt-15 btn btn-block btn-primary"

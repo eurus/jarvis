@@ -1,0 +1,34 @@
+.banner
+  .title 请假审批
+
+.p-20.pt-15
+  .panel
+    .panel-body
+      table.table.table-hover.datatable
+        thead
+          tr
+            th.desc 起始日期
+            th.sum_up 天数
+            th 申请人
+            th 类型
+            th 事由
+            th 状态
+            th 备注
+            th.no_sort
+            th.hidden
+
+        tbody
+          - @vacations.each do |vacation|
+            tr id="tr-vacation-#{vacation.id}"
+              td = vacation.start_at
+              td = vacation.duration
+              td = vacation.user.try :realname
+              td = vacation.cut
+              td = vacation.content
+              td id="tr-status-vacation-#{vacation.id}" class="text-center #{'warning' if vacation.approve}" = status vacation.try :approve
+              td id="tr-status-explain-#{vacation.id}" = vacation.status_explain
+              td.ops
+                 -if can? :check, :all
+                  = link_to fa_icon("check"),checkrecord_path(id: vacation.id, cut: 'vacation'), id:"check-vacation-#{vacation.id}", data: {confirm:"确认同意 #{vacation.user.try :realname} 的#{vacation.cut}申请？", text:"#{vacation.start_at}起，为期#{vacation.duration}天，事由：#{vacation.content}"}, title:"审核", remote:true unless vacation.approve
+              td=vacation.user.try :username
+

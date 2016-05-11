@@ -1,0 +1,44 @@
+.banner
+  .title 用户管理
+
+
+.p-20.pt-15
+  .panel
+    .panel-body
+      table.table.table-hover.datatable
+        thead
+          tr
+            th 姓名 (用户名)
+            th 工号
+            th 加入时间
+            th 生日
+            th 累积差旅
+            th 完成项目
+            th 剩余/总年假
+            th.no_sort
+        tbody
+          - @users.each do |u|
+            tr
+              td
+                =image_tag "#{u.avatar_url(:thumb)}", class:'img-circle pull-left animated jello' if u.avatar?
+                div.ml-10.mt-5.pull-left
+                  - if u.try(:gender) == "男"
+                    span.ml-5=fa_icon 'mars'
+                  - elsif u.try(:gender) == '女'
+                    span.ml-5=fa_icon 'venus'
+                div.mt-5.pull-left
+                  div.ml-5
+                    b= "#{u.try :realname}"
+                  div.ml-5= "#{u.try(:username).capitalize}"
+              td = u.try :user_number
+              td = u.try :join_at
+              td = u.try :birthday
+              td = "￥#{u.total_fee} / #{u.total_errand_day_count} 天"
+              td = u.projects.done.count
+              td = "#{u.sabbatical_total(@start_date, @end_date) - u.sabbatical_used(@start_date, @end_date)} / #{u.sabbatical_total(@start_date, @end_date)}"
+              td.ops
+                - if current_user.role == 'ceo' || current_user.role == 'director'
+                  a href="/supervise/users/edit/#{u.id}"
+                    = fa_icon('pencil-square-o')
+                  = link_to fa_icon("trash"), "/supervise/users/#{u.id}",data: {:confirm => "确定删除账号：#{u.try :realname} ？"}, :method => :delete if not current_user.id == u.id
+

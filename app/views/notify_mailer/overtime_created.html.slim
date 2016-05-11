@@ -1,0 +1,18 @@
+css:
+  b{
+  margin-left:10px;
+  margin-right:10px;
+  }
+
+
+.content
+  p
+    = "#{@overtime.user.try :realname} 希望自 #{@overtime.start_at.strftime('%Y-%m-%d')} 起加班 #{@overtime.duration} 天"
+
+  p ="理由为：#{@overtime.content}"
+
+.footer
+  hr
+  div Excelsior! 精益求精
+  div Jarvis
+

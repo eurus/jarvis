@@ -1,0 +1,25 @@
+nav.navbar.navbar-default.navbar-fixed-top
+  .navbar-header.text-center
+    a.navbar-brand href="/"
+      =image_tag "logo-dark.png", class:'img-responsive inline mr-10', width:'30px'
+      span.bold(style="margin-right:3px;") Eurus
+      span Studio
+
+    button.navbar-toggle.collapsed aria-controls="navbar" aria-expanded="false" data-target="#navbar" data-toggle="collapse" type="button"
+      span.sr-only Toggle navigation
+      span.icon-bar
+      span.icon-bar
+      span.icon-bar
+
+  #navbar.navbar-collapse.collapse
+    ul.nav.navbar-nav
+      li
+        a#menu-toggle href='#' =fa_icon 'th-large'
+      li= switch_user_select if Rails.env == 'development'
+
+
+    ul.nav.navbar-nav.navbar-right
+      li
+        = link_to fa_icon("gear"), settings_path
+      li
+        = link_to fa_icon("plug"), destroy_user_session_path, method: :delete, data: {:confirm => '确认退出嘛？'}

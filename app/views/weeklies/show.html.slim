@@ -1,0 +1,20 @@
+div
+  .banner
+    .title 周报
+.row
+  .col-md-8.col-md-offset-2
+    .p-15.pt-20
+      .panel.panel-board
+        .panel-heading.text-center
+          .actions.pull-right
+            = link_to fa_icon('book'), weeklies_path
+            = link_to fa_icon('pencil-square-o'), edit_weekly_path(@weekly)
+          h3 = @weekly.created_at.strftime("%Y-%m-%d")
+          h5= "作者：#{@weekly.user.try :realname}"
+        .panel-body
+          h3 总结
+          article
+            = raw @weekly.sumary
+          h3 期望
+          article
+            = raw @weekly.hope

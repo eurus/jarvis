@@ -1,0 +1,42 @@
+.banner
+  .title 假期
+  .breadcrumb-wrapper
+    label 您现在的位置:
+    ul.breadcrumb
+      li
+        a href='#'
+      li.active  所有请假
+.p-20.pt-15
+  .panel
+    .panel-body
+      - if @vacations.length == 0
+        div 居然从来没有请过假，难道你就是传说中的超人员工？
+      - else
+        table.table.table-hover
+          thead
+            tr
+              th 开始日期
+              th 天数
+              th 类型
+              th 事由
+              th 状态
+              th
+
+          tbody
+            - @vacations.each do |vacation|
+              tr
+                td = vacation.start_at
+                td = vacation.duration
+                td = vacation.cut
+                td
+                  p.limit-text= vacation.content
+                td  class="text-center #{'success' if vacation.approve}"= status vacation.try :approve
+                td.ops
+                  - unless vacation.approve
+                    = link_to fa_icon("pencil-square-o"), edit_vacation_path(vacation)
+                    = link_to fa_icon('trash'), vacation, data: {:confirm => 'Are you sure?'}, :method => :delete
+.text-center
+  = paginate @vacations,theme: 'twitter-bootstrap-3'
+
+
+

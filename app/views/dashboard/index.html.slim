@@ -1,0 +1,94 @@
+.p-15.pt-20
+  .col-md-6
+    .row
+      .col-sm-6
+        .panel.panel-board.board-green
+          .panel-body
+            =fa_icon 'plane',class: 'heading'
+            .num = "￥#{get_errand current_user}"
+            .hint 累积差旅
+      .col-sm-6
+        .panel.panel-board
+          .panel-body
+            =fa_icon 'check-square-o', class:'heading'
+            .num = get_done current_user
+            .hint  本年完成项目
+      .col-sm-6
+        .panel.panel-board
+          .panel-body
+            =fa_icon 'calendar',class: 'heading'
+            .num = "#{current_user.sabbatical_total(@start_date, @end_date) - current_user.sabbatical_used(@start_date, @end_date)}/#{current_user.sabbatical_total(@start_date, @end_date) }"
+            .hint 剩余年假 / 总年假
+      .col-sm-6
+        .panel.panel-board.board-blue
+          .panel-body
+            =fa_icon 'twitter',class: 'heading'
+            .num = "#{@errand_count}天"
+            .hint 累计出差天数
+
+
+  .col-md-3
+    .row
+      .col-sm-6.col-md-12#useful
+        .panel.panel-board.board-yellow.animated.shake
+          .panel-body
+            =fa_icon 'smile-o',class: 'heading'
+            .num ="#{current_user.reliability}%"
+            .hint 靠谱系数
+
+      .col-sm-6.col-md-12
+        .panel.panel-board
+          .panel-body#weather
+
+              =fa_icon("cloud-download", class:'heading')
+              .num ="-.-b"
+              .hint God Knowns
+  .col-md-3
+    .panel.panel-default style='min-height:206px'
+      .panel-heading 常用链接
+      .panel-body
+        ul.list-unstyled.p-20.pt-5
+          li.mt-10
+            = link_to "风豪科技" ,'http://www.eurus.cn', target: "_blank"
+          li.mt-10
+            = link_to "维基百科" ,'http://wiki.eurus.cn', target: "_blank"
+          li.mt-10
+            = link_to "反馈" ,feedbacks_path
+
+  .col-md-6
+    .panel.panel-default
+      .panel-heading
+        p
+          span 今日推荐
+          span.pull-right
+            = link_to "群发" ,jarvis_send_path(aid:@art),remote: true
+
+      .panel-body
+        h3 = @art.try :title
+        article
+          = raw @art.try :content
+
+
+
+  -unless @plan == nil
+    .col-md-6
+      .panel.panel-default
+        .panel-heading.item-heading
+          span.title 最近计划
+          span id="plan-status-#{@plan.id}" class="label label-#{@plan.status_class}" = @plan.status
+          span.subtitle = "[ #{@plan.start_at.strftime('%Y-%m-%d')} - #{@plan.end_at.strftime('%Y-%m-%d')} ]"
+          .actions.pull-right
+            /= link_to fa_icon('eye'), weekly
+            - if pm? or director? or ceo?
+              = link_to fa_icon('check'), update_status_plans_path(id:@plan.id), data: {:confirm => "确认此计划已完成？"},remote: true,class: "" unless @plan.done
+            = link_to fa_icon("pencil-square-o"), edit_plan_path(@plan) if @plan.creator_id == current_user.id unless @plan.done
+            = link_to fa_icon('times'), @plan, data: {:confirm => "确认删除此计划？"}, :method => :delete,class: "" if @plan.creator_id == current_user.id and not @plan.done
+
+        .panel-body.item-body
+          article
+            b.pull-left = "#{@plan.cut}计划"
+            p.pull-right=" 拟定于 #{@plan.created_at.strftime('%Y-%m-%d')}"
+            b.pull-right.mr-5 ="#{@plan.creator.try :realname}"
+            .clearfix
+            = raw (@plan.try :description)
+

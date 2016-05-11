@@ -1,0 +1,52 @@
+// Place all the styles related to the dashboard controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+.user-opt{
+  position:absolute;
+  // center the user operation
+  left:70px;
+  bottom: 10px;
+  text-align: center;
+  span {
+    a{
+      color: #f5f5f5;
+      img{
+        width: 30px;
+        height:30px;
+      }
+    }
+    a:hover{
+      color:red;
+    }
+    padding:5px;
+    font-size: 20px;
+  }
+}
+
+#dashboard {
+  background: #f5f5f5 !important;
+}
+.weather{
+  height: 100px;
+  width: 250px;
+  position: relative;
+  .icon{
+    font-size: 40px;
+    position:absolute;
+    left:10px;
+  }
+  .text{
+    position: absolute;
+    bottom: 1px;
+    font-size: 20px;
+    font-weight: 100;
+    left:10px;
+  }
+  .temp{
+    position: absolute;
+    font-size: 50px;
+    top:10px;
+    right: 20px;
+  }
+}
+

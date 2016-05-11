@@ -1,0 +1,19 @@
+css:
+  b{
+  padding:0 10px;
+  }
+
+.content
+  p 你的请假申请已获得批准！
+
+  div 具体信息如下：
+  div
+    = "#{@vacation.start_at.strftime('%Y-%m-%d')} 起 #{@vacation.duration} 天"
+    b=@vacation.cut
+  div= "理由为：#{@vacation.content}"
+
+.footer
+  hr
+  div Excelsior! 精益求精
+  div Jarvis
+

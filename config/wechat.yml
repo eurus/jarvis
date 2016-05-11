@@ -1,0 +1,13 @@
+default: &default
+  appid: "your wechat appkey"
+  secret: "your wechat secret"
+  access_token: "public/token"
+
+production:
+  <<: *default
+
+development:
+  <<: *default
+
+test:
+  <<: *default

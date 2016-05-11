@@ -1,0 +1,65 @@
+.row
+  table.table.table-hover
+  .col-md-3
+  .col-md-6
+    = simple_form_for @user, url: "/supervise/users/#{@user.id}",method: :put ,html: { multipart: true }do |f|
+      -if @user.errors.any?
+        ul
+          - @user.errors.full_messages.each do |msg|
+            li = msg
+      .row
+
+        .form-group.col-md-6
+          = f.label "用户名"
+          = f.text_field :username, class: "form-control"
+        .form-group.col-md-6
+          = f.label "姓名"
+          = f.text_field :realname, class: "form-control"
+        .form-group.col-md-6
+          = f.label "角色"
+          = f.input :role, collection: User::USERROLE,input_html:{class: "form-control"},label: false
+        .form-group.col-md-6
+          = f.label "职称"
+          = f.input :rank, collection: User::RANK, input_html:{class:'form-control'}, label:false
+        .form-group.col-md-6
+          = f.label "工号"
+          = f.text_field :user_number, class: "form-control"
+        .form-group.col-md-6
+          = f.label "邮箱"
+          = f.text_field :email, class: "form-control"
+
+        .form-groups.col-md-6
+          = f.label "入职时间"
+          = f.text_field :join_at,{class: "form-control datepicker"}
+          /.col-md-6
+            = f.label "离职时间"
+            = f.text_field :leave_at,{class: "form-control datepicker"}
+        .form-group.col-md-6
+          = f.label "生日"
+          = f.text_field :birthday, {class: 'form-control datepicker'}
+
+        /.form-group
+          = f.label "昵称"
+          = f.text_field :nickname, class: "form-control"
+        .form-group.col-md-6
+          = f.label "性别"
+          = f.input :gender, collection: ["男","女","其他"],label: false,input_html: {class: "form-control"}
+
+        .form-group.col-md-6
+          = f.label "身份证号"
+          = f.text_field :idcode, label: false,class: "form-control"
+
+      .form-group.mt-30
+        .row
+          .col-md-6
+            = link_to "返回", supervise_index_path,class: "btn btn-default btn-block"
+          .col-md-6
+            = f.submit "更新", class: "btn btn-primary btn-block"
+
+coffee:
+  $ ->
+    $('.datepicker').datepicker({
+        format: 'yyyy-mm-dd',
+        autoclose: true,
+        language:'zh-CN'
+    })

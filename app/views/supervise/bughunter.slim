@@ -1,0 +1,21 @@
+.banner
+  .title 八阿哥
+.p-20.pt-15
+  .panel
+    .panel-body
+      table.table.table-hover
+        thead
+          tr
+            th.col-md-2 项目名字
+            th.col-md-7 堆栈
+            th.col-md-2 时间
+            th.col-md-1
+        tbody
+          - @bugs.each do |bug|
+            tr
+              td = bug.try :project_name
+              td = bug.trace[0..50] rescue ''
+              td = bug.created_at.strftime("%Y-%m-%d %H:%M:%S")
+              td = link_to fa_icon('eye'),bugshow_path(bug)
+.row.text-center
+  = paginate @bugs,theme: 'twitter-bootstrap-3'

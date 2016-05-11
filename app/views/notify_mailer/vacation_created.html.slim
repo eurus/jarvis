@@ -1,0 +1,19 @@
+css:
+  b{
+  margin-left:10px;
+  margin-right:10px;
+  }
+
+
+.content
+  p
+    = "#{@vacation.user.try :realname} 希望自 #{@vacation.start_at.strftime('%Y-%m-%d')} 起请假 #{@vacation.duration} 天"
+    b =@vacation.cut
+
+  p ="理由为：#{@vacation.content}"
+
+.footer
+  hr
+  div Excelsior! 精益求精
+  div Jarvis
+

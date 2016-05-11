@@ -1,0 +1,43 @@
+.row
+  .banner
+    .title 加班
+    .breadcrumb-wrapper
+      label 您现在的位置:
+      ul.breadcrumb
+        li=link_to "加班", overtimes_path
+        li.active 加班申请
+.col-md-6.col-md-offset-3
+  = simple_form_for(@overtime) do |f|
+    -if @overtime.errors.any?
+      ul
+        - @overtime.errors.full_messages.each do |msg|
+          li = msg
+    .form-groups.row
+      .col-md-6
+        = f.label "开始时间"
+        = f.text_field :start_at,{class: "form-control datepicker"}
+      .col-md-6
+        = f.label "持续时间"
+        = f.number_field :duration, class: "form-control", placeholder: "0.5的整数倍"
+    .form-group
+      = f.label "相关项目"
+      = f.select :project_id, @projects.collect {|p| [ p.name, p.id ]}, {}, {class:'form-control'}
+    .form-groups
+      = f.label "加班内容"
+      = f.text_field :content,class: "form-control"
+
+    .form-actions.pt-20.row
+      .col-md-6
+        = link_to "返回", overtimes_path ,class: "btn btn-default btn-block"
+      .col-md-6
+        = f.submit '保存',class:"btn btn-block btn-primary"
+.col-md-3
+
+coffee:
+  $ ->
+    config = {
+      dropdownCssClass : 'bigdrop',
+      width: '300px',
+      containerCss : {"display":"block"}
+    }
+

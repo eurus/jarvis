@@ -1,0 +1,21 @@
+.row
+  table.table.table-hover
+  .col-md-3
+  .col-md-6
+    = simple_form_for :supervisor, url: supervise_group_create_path,method: :post ,html: { multipart: true }do |f|
+      .form-group
+        = f.label "负责人"
+        = f.select :supervisor_id, @available_buddies.collect {|u| [ "#{u.fullname}", u.id ]}, {}, {class:'form-control'}
+
+        = f.label "下属"
+        select#buddies name='buddies[]' multiple='multiple' style='min-width:500px'
+          -@available_buddies.each do |u|
+            = content_tag(:option, "#{u.fullname}", value: u.id, selected: false)
+      .form-group
+        .row
+          .col-md-6
+            = link_to "返回", supervise_index_path,class: "btn btn-default btn-block"
+          .col-md-6
+            = f.submit "保存", class: "btn btn-primary btn-block"
+coffee:
+  $('#buddies').selectize();

@@ -1,0 +1,25 @@
+.banner
+  .title 组织架构
+
+.p-20.pt-15
+  .panel.panel-default
+    .panel-body
+      .tree.text-center
+        ul.clearfix
+          =user_tree current_user
+
+/ .p-20.pt-15
+    - @buddies.try :each do |x|
+      .col-md-2
+        .panel.panel-default
+          .panel-heading
+            ="#{x.try :realname}"
+            - if ceo? or director?
+              .actions.pull-right
+                = link_to fa_icon('pencil-square-o'), edit_user_group_path(id:x.id) unless x.staff? or x.intern?
+                - unless staff? or intern?
+                  = link_to fa_icon('recycle'), cancel_group_path(id:x.id),data: {:confirm => "确认撤销 #{x.username} 的职务?", text:"原职务：#{x.role}"}, :method => :delete unless x.staff? or x.intern?
+          .panel-body
+            =image_tag "#{x.avatar_url(:middle)}", class:'img-responsive animated jello' if x.avatar?
+            div.mt-10= "英文名：#{x.username}"
+            div= "角色：#{x.role_explain}"

@@ -1,0 +1,39 @@
+.text-center(style='margin-top:100px;')
+  =image_tag 'eurus.png'
+h2.text-center(style='margin-top:20px;') 风豪科技
+
+.col-md-3
+.col-md-6
+  = simple_form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
+    = f.error_notification
+    .form-group
+      .input-group
+        span.input-group-addon
+          = fa_icon "envelope-o", style:'width:20px;'
+        = f.input :login, input_html:{class: "form-control"}, required: false, autofocus: true,placeholder: "用户名",label: false
+        span.input-group-addon @eurus.cn
+    .form-group
+      .input-group
+        span.input-group-addon
+          = fa_icon "lock", style:'width:20px;'
+        = f.input :password, input_html:{class: "form-control"}, required: false, autofocus: true, placeholder: "密码",label:false
+    .form-group
+      .input-group
+        span.input-group-addon
+          =fa_icon "child", style:'width:20px;'
+
+        = rucaptcha_input_tag(class: 'form-control', placeholder: '验证码')
+
+    =link_to '/users/sign_in'
+      = rucaptcha_image_tag style:'border-radius:4px; border:1px solid #ccc;'
+    .form-group
+      = f.check_box :remember_me, as: :boolean if devise_mapping.rememberable?
+      |
+      = f.label "记住我", class:'ml-10'
+      = link_to "忘记密码？", new_password_path(resource_name),class:"pull-right"
+    .form-group
+      = f.submit "登   录", class: "btn btn-primary btn-block"
+.col-md-3
+/ = render "devise/shared/links"
+
+

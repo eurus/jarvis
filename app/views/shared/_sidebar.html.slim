@@ -1,0 +1,70 @@
+.sidebar
+  .logo-img.text-center
+    a href="/"
+      =image_tag "#{current_user.avatar_url(:middle)}", class:'img-circle animated rollIn' if current_user.avatar
+  .text-center
+    .name = current_user.nickname.upcase
+    .rank = current_user.rank
+  -if params[:controller] == 'supervise'
+    .title management
+    div.list-group.text-center
+      = link_to supervise_projects_path , class: "list-group-item #{'active' if params[:action] == 'projects' or params[:action].end_with? 'project' or params[:action].starts_with? 'project'}" do
+        = fa_icon("building")+" 项目"
+      - if can? :overtimes, :all
+        = link_to supervise_overtimes_path , class: "list-group-item #{'active' if params['action'] == 'overtimes'}" do
+          = fa_icon("briefcase")+" 加班"
+      - if can? :errands, :all
+        = link_to supervise_errands_path , class: "list-group-item #{'active' if params['action'] == 'errands'}" do
+          = fa_icon("paper-plane")+" 差旅"
+      - if can? :vacations, :all
+        = link_to supervise_vacations_path , class: "list-group-item #{'active' if params['action'] == 'vacations'}" do
+          = fa_icon("bed")+" 请假"
+      = link_to supervise_groups_path , class: "list-group-item #{'active' if params[:action] == 'groups' or params[:action].start_with? 'user_group'}" do
+        = fa_icon("group")+" 组织"
+
+
+      = link_to supervise_users_path , class: "list-group-item #{'active' if params[:action] == 'users' or params[:action].end_with? 'user'}" do
+        = fa_icon("user")+" 用户"
+
+      = link_to supervise_bughunter_path , class: "list-group-item #{'active' if params[:action] == 'bughunter' or params[:action].end_with? 'bughunter'}" do
+        = fa_icon("bug")+" BugHunter"
+
+    .pl-20.pr-20
+      = link_to fa_icon('plus')+ "新增员工", supervise_users_new_path,class: "btn btn-outstand btn-block" if current_user.role == 'ceo' && params[:action] == 'users'
+      = link_to fa_icon('plus')+'新建组织', supervise_group_new_path,class: 'btn btn-outstand btn-block' if (ceo? or director?) && params[:action] == 'groups'
+      = link_to fa_icon('plus')+'新建项目', supervise_projects_new_path,class: 'btn btn-outstand btn-block' if (director? or ceo? or pm?) && params[:action] == 'projects'
+
+  -else
+    .title
+    div.list-group.text-center
+      = link_to root_path , class: "list-group-item #{'active' if params['controller'] == 'dashboard'}" do
+        = fa_icon("dashboard")+" Dash"
+      = link_to projects_path , class: "list-group-item #{'active' if params['controller'] == 'projects'}" do
+        = fa_icon("building") + " 项目"
+      = link_to errands_path , class: "list-group-item #{'active' if params['controller'] == 'errands'}" do
+        = fa_icon("paper-plane") + " 差旅"
+
+      = link_to vacations_path , class: "list-group-item #{'active' if params['controller'] == 'vacations'}" do
+        = fa_icon("bed") + " 请假"
+      = link_to overtimes_path , class: "list-group-item #{'active' if params['controller'] == 'overtimes'}" do
+        = fa_icon("briefcase") + " 加班"
+
+      = link_to plans_path , class: "list-group-item #{'active' if params['controller'] == 'plans'}" do
+        = fa_icon("clock-o") + " 计划"
+
+      = link_to weeklies_path , class: "list-group-item #{'active' if params['controller'] == 'weeklies'}" do
+        = fa_icon("newspaper-o") + " 周报"
+
+      = link_to articals_path , class: "list-group-item #{'active' if params['controller'] == 'articals'}" do
+        =fa_icon("book") +" 文章"
+      - if can? :projects, :all
+        = link_to supervise_projects_path , class: "list-group-item #{'active' if params['controller'] == 'supervise'}" do
+          =fa_icon("cog") +" 管理"
+
+    div.pl-20.pr-20
+      = link_to fa_icon('plus')+'差旅汇报', new_errand_path,class: "btn btn-outstand btn-block" if params['controller'] == 'errands'
+      = link_to fa_icon('plus')+'请假申请', new_vacation_path,class: "btn btn-outstand btn-block" if params['controller'] == 'vacations'
+      = link_to fa_icon('plus')+'加班申请', new_overtime_path,class: "btn btn-outstand btn-block" if params['controller'] == 'overtimes'
+      = link_to fa_icon('plus')+'书写周报', new_weekly_path,class: "btn btn-outstand btn-block" if params['controller'] == 'weeklies'
+      = link_to fa_icon('plus')+'撰写文章', new_artical_path,class: "btn btn-outstand btn-block" if params['controller'] == 'articals'
+      = link_to fa_icon('plus')+'拟定计划', new_plan_path,class: "btn btn-outstand btn-block" if params['controller'] == 'plans'

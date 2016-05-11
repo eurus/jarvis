@@ -1,0 +1,25 @@
+div
+  .banner
+    .title 文章
+    .breadcrumb-wrapper
+      label 您现在的位置:
+      ul.breadcrumb
+        li
+          a href='#' 文章
+        li.active  所有文章
+  .row.p-40.pt-15
+    - @articals.try :each do |a|
+      .col-md-6
+        .panel.panel-default
+          .panel-heading
+            = a.try :title
+            .actions.pull-right
+              = link_to fa_icon('eye'), a
+              = link_to fa_icon('pencil-square-o'), edit_artical_path(a)
+              = link_to fa_icon('times'), a, data: {:confirm => 'Are you sure?'}, :method => :delete
+          .panel-body
+            span = a.try :origin
+            span = a.try :user_id
+            
+.row.text-center
+  = paginate @articals,theme: 'twitter-bootstrap-3'

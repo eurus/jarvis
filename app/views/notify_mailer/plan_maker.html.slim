@@ -1,0 +1,23 @@
+css:
+  .small{
+    font-size:12px !important;
+    color:#666 !important;
+  }
+  .content{
+  padding:20px;
+  }
+  .footer{
+  margin-top:20px;
+  }
+.text-center
+  = image_tag "http://7rflo0.com1.z0.glb.clouddn.com/logo-dark.png", width: '50',height: '50'
+  h1 = "#{@plan.cut}计划：#{@plan.title}"
+  div.small = "#{@plan.user.try :realname} [#{@plan.start_at.strftime('%Y-%m-%d')} - #{@plan.end_at.strftime('%Y-%m-%d')}]"
+
+.content= raw @plan.description
+
+.footer
+  hr
+  div Excelsior! 精益求精
+  div Jarvis
+

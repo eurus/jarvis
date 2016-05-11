@@ -1,0 +1,69 @@
+.row
+  .banner
+    .title 设置
+    .breadcrumb-wrapper
+      label 您现在的位置:
+      ul.breadcrumb
+        li
+          a href='#' 设置
+        li.active  所有设置
+  .container
+    .col-md-6.col-md-offset-3
+      .panel.panel-default
+        .panel-heading 用户资料
+        .panel-body.text-center
+          table.table.table-hover
+            tbody
+              tr
+                td 姓名
+                td = current_user.try :realname
+              tr
+                td 用户名
+                td = current_user.try :username
+              tr
+                td 性别
+                td = current_user.try :gender
+              tr
+                td 工号
+                td = current_user.try :user_number
+              tr
+                td 昵称
+                td = current_user.try :nickname
+              tr
+                td 生日
+                td = current_user.try :birthday
+              tr
+                td 职称
+                td = current_user.try :rank
+
+  .container
+    .col-md-6.col-md-offset-3
+      = simple_form_for @user, url: update_setting_path,method: :put ,html: { multipart: true }do |f|
+        .text-center
+          = image_tag(@user.avatar_url(:middle),class:"img-circle animated bounce") if @user.avatar?
+        .form-group
+          = f.label :avatar
+          = f.file_field :avatar, class: "form-control"
+        .form-group
+          = f.label :realname
+          = f.text_field :realname, class: "form-control"
+        .form-group
+          = f.label :nickname
+          = f.text_field :nickname, class: "form-control"
+        .form-groups
+          = f.label "生日"
+          = f.text_field :birthday,{class: "form-control datepicker"}
+        .form-group
+          = f.label :gender
+          = f.input :gender, collection: ["男","女","其他"],label: false,input_html: {class: "form-control"}
+        .form-group
+          = f.submit "更新", class: "btn btn-primary btn-block"
+          = link_to "修改密码",edit_user_registration_path, class: "btn btn-danger btn-block"
+coffee:
+  $ ->
+    $('.datepicker').datepicker({
+        format: 'yyyy-mm-dd',
+        autoclose: true,
+        language:'zh-CN'
+    })
+

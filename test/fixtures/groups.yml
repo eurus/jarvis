@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  leader: 1
+  leader_role: MyString
+  name: MyString
+
+two:
+  leader: 1
+  leader_role: MyString
+  name: MyString

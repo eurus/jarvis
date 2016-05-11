@@ -1,0 +1,46 @@
+.row
+  .banner
+    .title 出差
+
+.col-md-3
+.col-md-6
+  = simple_form_for(@errand) do |f|
+    -if @errand.errors.any?
+        ul
+          - @errand.errors.full_messages.each do |msg|
+            li = msg
+            
+    .form-groups.row
+      .col-md-6
+        = f.label "开始时间"
+        = f.text_field :start_at,{class: "form-control datepicker"}
+      .col-md-6
+        = f.label "结束时间"
+        = f.text_field :end_at,{class: "form-control datepicker"}
+    .form-groups.row
+      .col-md-6
+        = f.label "相关项目"
+        = f.select :project_id, @projects.collect {|p| [ p.name, p.id ]}, {}, {class:'form-control'}
+      .col-md-6
+        = f.label "费用"
+        = f.text_field :fee,class: "form-control"
+    .form-groups.mt-20
+      = f.label "出差内容"
+      = f.text_area :content,class: "form-control", rows:'5'
+    .form-actions
+      .row.mt-40
+        .col-md-6
+          = link_to "返回", errands_path ,class: "btn btn-default btn-block"
+        .col-md-6
+          = f.submit '保存',class:"btn btn-block btn-primary"
+.col-md-3
+coffee:
+  config = {
+    dropdownCssClass : 'bigdrop',
+    width: '300px',
+    containerCss : {"display":"block"}
+  }
+  $('.datepicker').datepicker({
+      format: 'yyyy-mm-dd',
+      autoclose: true
+  })

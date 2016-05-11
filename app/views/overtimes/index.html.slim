@@ -1,0 +1,39 @@
+.banner
+  .title 加班
+  .breadcrumb-wrapper
+    label 您现在的位置:
+    ul.breadcrumb
+      li
+        a href='#' 加班
+      li.active  所有加班
+.p-20.pt-15
+  .panel
+    .panel-body
+      -if @overtimes.length == 0
+        div 如果加班能当饭吃，你的加班也许能养活整个中国！
+      - else
+        table.table.table-hover
+          thead
+            tr
+              th 日期
+              th 天数
+              th 项目
+              th 内容
+              th 状态
+              th
+
+
+          tbody
+            - @overtimes.try :each do |overtime|
+              tr
+                td = overtime.start_at
+                td = overtime.duration
+                td = overtime.project.try :name
+                td = overtime.content
+                td class="text-center #{issue_class overtime.approve, overtime.issue}" = issue_status overtime.approve, overtime.issue
+                td
+                  - unless overtime.approve
+                    = link_to fa_icon("pencil-square-o"), edit_overtime_path(overtime),class: "pull-left"
+                    = link_to fa_icon('trash'), overtime, data: {:confirm => 'Are you sure?'}, :method => :delete,class: "pull-right"
+.text-center
+  = paginate @overtimes,theme: 'twitter-bootstrap-3'

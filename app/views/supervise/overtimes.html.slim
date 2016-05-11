@@ -1,0 +1,36 @@
+.banner
+  .title 加班审批
+.p-20.pt-15
+  .panel
+    .panel-body
+      table.table.table-hover.datatable
+        thead
+          tr
+            th.desc 日期
+            th.sum_up 天数
+            th 申请人
+            th 项目
+            th 内容
+            th 状态
+            th 备注
+            th.no_sort
+            th.hidden
+
+
+        tbody
+          - @overtimes.each do |overtime|
+            tr id="tr-overtime-#{overtime.id}"
+              td = overtime.start_at
+              td = overtime.duration
+              td = overtime.user.try :realname
+              td = overtime.project.try :name
+              td
+                p.limit-text = overtime.content
+              td id="tr-status-overtime-#{overtime.id}"  class="text-center #{issue_class overtime.approve, overtime.issue}" = issue_status overtime.approve, overtime.issue
+              td id="tr-status-explain-#{overtime.id}"= overtime.status_explain
+              td.ops
+                 -if can? :check, :all
+                  = link_to fa_icon("check"), checkrecord_path(id: overtime.id, cut: 'overtime'), id: "check-overtime-#{overtime.id}",remote: true,data: {confirm:"确认同意 #{overtime.user.try :realname} 的加班申请？", text:"#{overtime.start_at}起，为期#{overtime.duration}天，项目：#{overtime.project.try :name}"} unless overtime.approve
+                 -if can? :issue, :all
+                  = link_to fa_icon('usd'), issuerecord_path(id: overtime.id, cut: 'overtime'), id: "issue-overtime-#{overtime.id}", remote: true, data: {:confirm => "确认发放加班费: #{overtime.user.try :realname}", text:"#{overtime.start_at}起，为期#{overtime.duration}天，项目：#{overtime.project.try :name}"} unless overtime.issue
+              td = overtime.user.try :username

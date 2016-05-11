@@ -1,0 +1,21 @@
+scss:
+  .captcha-group{
+    margin-top: 10px;
+    width: 200px;
+    height: auto;
+  }
+.form-group
+  .input-group
+    span.input-group-addon
+      
+      = fa_icon 'file-image-o'
+    = simple_captcha_options[:field] 
+  .captcha-group
+    = simple_captcha_options[:image] 
+    = simple_captcha_options[:refresh_button] 
+
+coffee:
+  $ ->
+    
+    $('#user_captcha').addClass "form-control"
+    

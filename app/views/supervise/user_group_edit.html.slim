@@ -1,0 +1,20 @@
+.row
+  table.table.table-hover
+  .col-md-3
+  .col-md-6
+    p 当前用户
+    p = "#{@supervisor.email}(#{@supervisor.try :realname})"
+    = simple_form_for :sp, url: supervise_group_update_path,method: :put ,html: { multipart: true }do |f|
+      .form-group
+        = f.hidden_field :id , value:@supervisor.id
+
+        = f.label "下属"
+        select#buddies name='buddies[]' multiple='multiple' style='min-width:500px'
+          -@available_buddies.each do |u|
+            = content_tag(:option, "#{u.realname} #{u.username.capitalize}", value: u.id, selected: @supervisor.has_buddy?(u.id))
+      .form-group
+        = f.submit "保存", class: "btn btn-primary btn-block"
+        = link_to "返回", supervise_groups_path,class: "btn btn-default btn-block"
+coffee:
+  $ ->
+    $('#buddies').selectize();

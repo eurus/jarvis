@@ -1,0 +1,38 @@
+.banner
+  .title 计划
+  .breadcrumb-wrapper
+    label 您现在的位置:
+    ul.breadcrumb
+      li
+        a href='#' 计划
+      li.active  所有计划
+.p-20.pt-15
+  .masonry-container
+    - if @plans.length == 0
+      .panel.panel-default
+        .panel-body
+          div 对于有计划的人来说，未来是可以触摸的
+    - else
+      - @plans.each do |plan|
+        .item.col-md-6
+          .item-heading
+            span.title= plan.user.try :realname
+            span id="plan-status-#{plan.id}" class="label label-#{plan.status_class}" = plan.status
+            span.subtitle = "[ #{plan.start_at.strftime('%Y-%m-%d')} - #{plan.end_at.strftime('%Y-%m-%d')} ]"
+            .actions.pull-right
+              /= link_to fa_icon('eye'), weekly
+              - if pm? or director? or ceo?
+                = link_to fa_icon('check'), update_status_plans_path(id:plan.id), data: {:confirm => "确认此计划已完成？"},remote: true,class: "" unless plan.done
+              = link_to fa_icon("pencil-square-o"), edit_plan_path(plan) if plan.creator_id == current_user.id unless plan.done
+              = link_to fa_icon('times'), plan, data: {:confirm => "确认删除此计划？"}, :method => :delete,class: "" if plan.creator_id == current_user.id and not plan.done
+
+          .item-body
+            article
+              b.pull-left = "#{plan.cut}计划"
+              p.pull-right=" 拟定于 #{plan.created_at.strftime('%Y-%m-%d')}"
+              b.pull-right.mr-5 ="#{plan.creator.try :realname}"
+              .clearfix
+              = raw (plan.try :description)
+
+  .text-center
+    = paginate @plans,theme: 'twitter-bootstrap-3'

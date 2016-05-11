@@ -1,0 +1,60 @@
+.banner
+  .title=@project.name
+
+.col-md-9
+  = simple_form_for(@project_log, url: supervise_create_project_logs_path(@project)) do |f|
+    = f.error_notification
+
+    .row
+      .col-md-6
+        = f.label "日期"
+        = f.text_field :date, class:'form-control datepicker', value:Date.today.strftime("%Y-%m-%d")
+      .col-md-6
+        = f.label "类别"
+        = f.select :category, ProjectLog::CATEGORY_LIST,{}, {class:'form-control'}
+      
+    .form-groups style='position:relative;'
+      = f.label "内容"
+      = f.text_area :content, class:'form-control', rows:3, style:'padding-right:30px;'
+      = f.submit '保存', class:'btn btn-primary', style:"position:absolute; right:20px; bottom:20px;"
+
+    .form-actions
+  .row
+    .col-xs-12
+      - @project_logs.each do |project_log|
+        .row.log
+          .col-md-3.prefix
+            .fl.ml-10 =project_log.date
+            =image_tag project_log.user.try(:avatar), class:'fl ml-20 avatar-small'
+            .fl.ml-10=project_log.category
+          .col-md-9
+            .text
+              =project_log.content
+              =link_to content_tag(:span, '', class:'glyphicon glyphicon-remove'), supervise_destroy_project_logs_path(project_log.id), method: :delete, class:'remove'
+
+.col-md-3
+  .row.mt-30
+    .col-sm-3
+      label Team Leader
+    .col-sm-7
+      =image_tag(@project.owner.avatar, class:'avatar-medium', title: @project.owner.try(:fullname))
+  .row.mt-20
+    .col-sm-3
+      label 成员
+    .col-sm-7
+      - @project.users.each do |u|
+        =image_tag(u.avatar, class:'fl ml-10 mt-5 avatar-small', title:u.try(:fullname))
+  .row.mt-20
+    .col-sm-3
+      label 创建于
+    .col-sm-7
+      =@project.created_at.strftime('%Y-%m-%d')
+  .row.mt-20
+    .col-sm-3
+      label 简介
+    .col-sm-7
+      =@project.content
+
+  .text-center.mt-40
+    =link_to glyphicon_span('edit', '编辑项目'), supervise_edit_project_path(@project), class: 'btn btn-default'
+    =link_to glyphicon_span('remove', '删除项目'), supervise_destroy_project_path(@project), class:'btn btn-danger ml-10', method: :delete, style:'color:white;', data: {:confirm => "确定要删除该项目？"}
